@@ -1,0 +1,35 @@
+services:
+  database:
+    image: postgres:16.2
+    container_name: ramengo_database
+    environment:
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: ramengo
+    restart: unless-stopped
+    volumes:
+      - ${PWD}/.ramengo:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          cpus: '0.33'
+          memory: 256M
+
+  backend:
+    build: .
+    container_name: ramengo-spring-backend
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - 8080:8080
+    depends_on:
+      - database
+    deploy:
+      resources:
+        limits:
+          cpus: '0.33'
+          memory: 256M
+
+networks:
+  ramengo:
