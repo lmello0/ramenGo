@@ -1,8 +1,10 @@
 package br.com.lmello.redventures.ramengo.infra.exception.handler;
 
 import br.com.lmello.redventures.ramengo.dto.ErrorResponseDTO;
+import br.com.lmello.redventures.ramengo.infra.exception.InvalidRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,7 +24,7 @@ public class OrderControllerExceptionHandler {
         return ResponseEntity.internalServerError().body(new ErrorResponseDTO("could not place order"));
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler({ MethodArgumentNotValidException.class, HttpMessageNotReadableException.class, InvalidRequestException.class })
     public ResponseEntity<?> handleMethodArgumentNotValidException() {
         return ResponseEntity.badRequest().body(new ErrorResponseDTO("both brothId and proteinId are required"));
     }

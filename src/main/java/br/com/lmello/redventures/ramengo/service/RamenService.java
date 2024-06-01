@@ -1,5 +1,6 @@
 package br.com.lmello.redventures.ramengo.service;
 
+import br.com.lmello.redventures.ramengo.infra.exception.InvalidRequestException;
 import br.com.lmello.redventures.ramengo.infra.exception.NotFoundException;
 import br.com.lmello.redventures.ramengo.model.Ramen;
 import br.com.lmello.redventures.ramengo.repository.RamenRepository;
@@ -15,6 +16,10 @@ public class RamenService {
     private final RamenRepository repository;
 
     public Ramen findByBrothIdAndProteinId(Integer brothId, Integer proteinId) {
+        if (brothId == null || proteinId == null) {
+            throw new InvalidRequestException("brothId and proteinId cannot be null");
+        }
+
         Optional<Ramen> ramen = repository.findByBrothIdAndProteinId(brothId, proteinId);
 
         if (ramen.isEmpty()) {
