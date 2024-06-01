@@ -58,7 +58,7 @@ You must add header `X-API-KEY` with the value inserted on database for each req
 ### Requests:
 
 #### **GET `/broths`**:
-```http request
+```
 Returns a list of broths:
 
 [
@@ -74,7 +74,7 @@ Returns a list of broths:
 ```
 
 #### **GET `/proteins`**:
-```http request
+```
 Returns a list of proteins:
 
 [
@@ -91,16 +91,14 @@ Returns a list of proteins:
 
 #### **POST `/order`**:
 
-```http request
+```
 POST /order
 Content-Type: application/json or text/plain
 
 {
     "brothId": 1,
     "proteinId": 1
-}
-
-=== 
+} 
 
 {
     id: 1,
